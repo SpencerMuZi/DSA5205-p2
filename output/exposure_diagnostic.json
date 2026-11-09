@@ -1,0 +1,13 @@
+{
+  "holdout_mean_exposure": 0.6936127744510978,
+  "gross_constant_exposure_performance": {
+    "n_intervals": 1002,
+    "total_return": 0.35937545416867045,
+    "cagr": 0.08027534872612652,
+    "annualized_arithmetic_return": 0.08528095331356174,
+    "annualized_volatility": 0.12698502020105995,
+    "sharpe_rf_zero": 0.671582783375026,
+    "max_drawdown": -0.18687267647915007
+  },
+  "warning": "Ex post gross diagnostic, not an investable strategy or tuned alternative."
+}

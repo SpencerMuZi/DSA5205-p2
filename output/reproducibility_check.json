@@ -1,0 +1,38 @@
+{
+  "method": "Fresh isolated virtual environment, fresh working directory, same downloaded local input snapshot; no market-data redistribution.",
+  "commands": [
+    {
+      "command": "python -m pytest -q",
+      "returncode": 0,
+      "stdout": "...........                                                              [100%]\n11 passed in 5.53s\n"
+    },
+    {
+      "command": "python -m project2.pipeline all",
+      "returncode": 0,
+      "stdout": "CACHE: data/raw/spy_daily.csv sha256=e59594912552818d0fce625e8c8f16efe49d88db067cd787c27995355aa46498\nAUDIT: 4024 sessions, 64 dividend events, 0 splits\nVALIDATION (4 candidates; costs applied):\n alpha     cagr  sharpe_rf_zero  exposure\n   0.1 0.223255        1.206044  0.767196\n   1.0 0.223255        1.206044  0.767196\n  10.0 0.191462        1.076666  0.773810\n 100.0 0.186363        1.030999  0.857143\nLOCKED alpha=1; no other alpha evaluated on the final holdout\nTEST (selected model only):\n        strategy     cagr  annualized_volatility  sharpe_rf_zero  max_drawdown  exposure\n    Ridge timing 0.065357               0.157206        0.481139     -0.221998  0.693613\n     MA20 timing 0.036944               0.108267        0.389368     -0.191450  0.652695\nSPY buy-and-hold 0.111752               0.183075        0.670216     -0.262818  1.000000\nMatplotlib is building the font cache; this may take a moment.\nFIGURES: output/figures\n"
+    },
+    {
+      "command": "python -m project2.report",
+      "returncode": 0,
+      "stdout": "REPORT: output/pdf/Group_X_Report.pdf (21 pages)\n"
+    }
+  ],
+  "checks": {
+    "test_predictions.csv": {
+      "identical_bytes": true,
+      "sha256": "0ccaeaf2351cf3c005bced9b61d1a2db97632c90aa4ba91c39a32692d81aaa2c"
+    },
+    "test_metrics.csv": {
+      "identical_bytes": true,
+      "sha256": "40e27143445620b97c8beafc4514339c5913d074ee3a334330768d180478c8f0"
+    },
+    "validation_grid.csv": {
+      "identical_bytes": true,
+      "sha256": "f29a8270ef56ea480449b4b9b9bbb6287b71c8318ffb2d8f6f73eed2198ca326"
+    },
+    "test_fit_audit.csv": {
+      "identical_bytes": true,
+      "sha256": "33c486176c43550ae6a9d142d6cc4507b5f821a4c5400f2646ba1bd428b8d414"
+    }
+  }
+}

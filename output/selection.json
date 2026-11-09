@@ -1,0 +1,10 @@
+{
+  "protocol_sha256": "486f09769b61eb443c71517f51d750f9eeb111a696411492027fdb603f80a2ff",
+  "raw_sha256": "e59594912552818d0fce625e8c8f16efe49d88db067cd787c27995355aa46498",
+  "selected_alpha": 1.0,
+  "candidate_count": 4,
+  "selection_rule": "highest validation net Sharpe; ties within 1e-12 choose larger alpha",
+  "validation_grid_sha256": "f29a8270ef56ea480449b4b9b9bbb6287b71c8318ffb2d8f6f73eed2198ca326",
+  "test_performance_used_for_selection": false,
+  "note": "Protocol set before this implementation's first data download; not an external historical preregistration."
+}

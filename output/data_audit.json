@@ -1,0 +1,27 @@
+{
+  "raw_rows": 4024,
+  "duplicate_dates": 0,
+  "expected_exchange_sessions": 4024,
+  "missing_exchange_sessions": 0,
+  "extra_exchange_sessions": 0,
+  "missing_values": 0,
+  "zero_volume_sessions": 0,
+  "split_events": 0,
+  "dividend_events": 64,
+  "maximum_calendar_gap_days": 5,
+  "calendar_gaps_over_4_days": [
+    "2012-10-31"
+  ],
+  "vendor_vs_explicit_close_return_mean_absolute_difference": 5.942766400893025e-07,
+  "vendor_vs_explicit_close_return_max_absolute_difference": 0.0002520103766719961,
+  "largest_absolute_adjusted_close_return": 0.10942386910599544,
+  "feature_warmup_rows": 20,
+  "terminal_forward_label_rows_excluded": 2,
+  "complete_samples": 4002,
+  "first_sample": "2010-02-02",
+  "last_sample": "2025-12-29",
+  "calendar_note": "XNYS calendar verified using exchange-calendars; all expected sessions present, including special closures. Weekends/holidays not filled.",
+  "execution_return": "Raw open-to-open plus distribution receivable on EXIT ex-date; no splits observed.",
+  "adjusted_features": "Scale-invariant trailing ratios; full-history price levels never used as predictors.",
+  "outliers": "Legitimate extreme market returns retained; no full-sample winsorization."
+}

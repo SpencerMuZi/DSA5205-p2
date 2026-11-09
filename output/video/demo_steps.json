@@ -1,0 +1,38 @@
+[
+  {
+    "command": "python -m pytest -q",
+    "returncode": 0,
+    "elapsed_seconds": 0.85,
+    "stdout": "...........                                                              [100%]\n11 passed in 0.69s\n"
+  },
+  {
+    "command": "python -m project2.pipeline fetch",
+    "returncode": 0,
+    "elapsed_seconds": 0.602,
+    "stdout": "CACHE: data/raw/spy_daily.csv sha256=e59594912552818d0fce625e8c8f16efe49d88db067cd787c27995355aa46498\n"
+  },
+  {
+    "command": "python -m project2.pipeline validate",
+    "returncode": 0,
+    "elapsed_seconds": 1.839,
+    "stdout": "AUDIT: 4024 sessions, 64 dividend events, 0 splits\nVALIDATION (4 candidates; costs applied):\n alpha     cagr  sharpe_rf_zero  exposure\n   0.1 0.223255        1.206044  0.767196\n   1.0 0.223255        1.206044  0.767196\n  10.0 0.191462        1.076666  0.773810\n 100.0 0.186363        1.030999  0.857143\nLOCKED alpha=1; no other alpha evaluated on the final holdout\n"
+  },
+  {
+    "command": "python -m project2.pipeline test",
+    "returncode": 0,
+    "elapsed_seconds": 1.121,
+    "stdout": "AUDIT: 4024 sessions, 64 dividend events, 0 splits\nTEST (selected model only):\n        strategy     cagr  annualized_volatility  sharpe_rf_zero  max_drawdown  exposure\n    Ridge timing 0.065357               0.157206        0.481139     -0.221998  0.693613\n     MA20 timing 0.036944               0.108267        0.389368     -0.191450  0.652695\nSPY buy-and-hold 0.111752               0.183075        0.670216     -0.262818  1.000000\n"
+  },
+  {
+    "command": "python -m project2.pipeline figures",
+    "returncode": 0,
+    "elapsed_seconds": 1.403,
+    "stdout": "FIGURES: output/figures\n"
+  },
+  {
+    "command": "python -m project2.report",
+    "returncode": 0,
+    "elapsed_seconds": 1.025,
+    "stdout": "REPORT: output/pdf/Group_X_Report.pdf (21 pages)\n"
+  }
+]

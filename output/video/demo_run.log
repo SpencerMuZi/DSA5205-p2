@@ -1,0 +1,35 @@
+python -m pytest -q
+...........                                                              [100%]
+11 passed in 0.69s
+
+
+python -m project2.pipeline fetch
+CACHE: data/raw/spy_daily.csv sha256=e59594912552818d0fce625e8c8f16efe49d88db067cd787c27995355aa46498
+
+
+python -m project2.pipeline validate
+AUDIT: 4024 sessions, 64 dividend events, 0 splits
+VALIDATION (4 candidates; costs applied):
+ alpha     cagr  sharpe_rf_zero  exposure
+   0.1 0.223255        1.206044  0.767196
+   1.0 0.223255        1.206044  0.767196
+  10.0 0.191462        1.076666  0.773810
+ 100.0 0.186363        1.030999  0.857143
+LOCKED alpha=1; no other alpha evaluated on the final holdout
+
+
+python -m project2.pipeline test
+AUDIT: 4024 sessions, 64 dividend events, 0 splits
+TEST (selected model only):
+        strategy     cagr  annualized_volatility  sharpe_rf_zero  max_drawdown  exposure
+    Ridge timing 0.065357               0.157206        0.481139     -0.221998  0.693613
+     MA20 timing 0.036944               0.108267        0.389368     -0.191450  0.652695
+SPY buy-and-hold 0.111752               0.183075        0.670216     -0.262818  1.000000
+
+
+python -m project2.pipeline figures
+FIGURES: output/figures
+
+
+python -m project2.report
+REPORT: output/pdf/Group_X_Report.pdf (21 pages)

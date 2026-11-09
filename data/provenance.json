@@ -1,0 +1,18 @@
+{
+  "ticker": "SPY",
+  "source": "Yahoo Finance via yfinance",
+  "documentation": "https://ranaroussi.github.io/yfinance/reference/api/yfinance.download.html",
+  "retrieved_at_utc": "2026-11-09T06:52:08.394241+00:00",
+  "requested_start": "2010-01-01",
+  "requested_end_exclusive": "2026-01-01",
+  "yfinance_version": "1.8.0",
+  "auto_adjust": false,
+  "actions": true,
+  "repair": false,
+  "sha256": "e59594912552818d0fce625e8c8f16efe49d88db067cd787c27995355aa46498",
+  "rows": 4024,
+  "first_session": "2010-01-04",
+  "last_session": "2025-12-31",
+  "raw_data_redistributed": false,
+  "note": "Local research cache excluded from Git. Upstream revisions can change the hash."
+}
