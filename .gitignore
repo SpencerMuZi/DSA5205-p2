@@ -12,6 +12,13 @@ output/video/*.mp4
 output/video/*.aiff
 output/video/*.wav
 output/package/
+paper/*.pdf
+paper/*.aux
+paper/*.log
+paper/*.bbl
+paper/*.blg
+paper/*.out
+paper/*.synctex.gz
 .env
 .env.*
 !.env.example

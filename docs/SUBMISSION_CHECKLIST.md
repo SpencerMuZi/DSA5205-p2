@@ -6,7 +6,7 @@
 - [x] Common-date investable benchmark and fixed rule baseline.
 - [x] Net metrics, wealth, drawdown, yearly results, prediction checks, and cost sensitivity.
 - [x] Reproducible scripts, direct dependency pins, tests, and saved artifacts.
-- [x] 21-page English report generated from results and visually reviewed.
+- [x] 18-page LaTeX paper (two-column main text and technical supplement), compiled from frozen results and visually reviewed.
 - [ ] Fill actual group number, team name, full roster, and true contribution note.
 - [ ] Rename `Group_X_Report.pdf` using the actual group number.
 - [ ] Review the synthetic-narration walkthrough or record a team presentation; verify the final video meets course requirements.

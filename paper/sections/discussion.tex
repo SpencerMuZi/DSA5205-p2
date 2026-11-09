@@ -1,0 +1,19 @@
+\section{Discussion and Limitations}
+\label{sec:discussion}
+The experiment separates three claims that can otherwise be conflated. First, a pipeline can preserve time order and reproduce a numerical result. Second, a model can generate a portfolio with lower realized risk. Third, a strategy can deliver superior net investment performance. The evidence supports the first claim and documents a sample-specific risk reduction. It does not support the third. Methodological correctness is necessary for an interpretable negative finding; it is not evidence that the model must contain a profitable signal.
+
+\paragraph{Selection and historical hindsight.}
+The four-candidate grid is intentionally small, yet selecting by validation Sharpe can still favor estimation noise. The strong validation performance does not transfer to the holdout. The study cannot uniquely attribute this decline to a regime change, selection optimism, or weak underlying predictability. Moreover, the design was implemented after the test years had occurred. Fingerprints enforce consistency of the implemented sequence, not independence from all prior familiarity with market history.
+
+\paragraph{Execution and financing.}
+Orders are assumed to fill at the next observed opening price, with fixed proportional costs. Auction participation constraints, depth, market impact, rejected orders, and partial fills are absent. Cash and the Sharpe reference rate are zero, and distributions are credited as ex-date receivables. These simplifying assumptions affect economic interpretation. The final comparison is internally consistent, but is not a deployment-ready simulation of a specific account.
+
+\paragraph{Scope and statistical uncertainty.}
+One ETF and one four-year holdout cannot establish broad generality. The reported Sharpe ratios are point estimates, and no dependence-robust confidence intervals, formal superiority tests, or factor alpha estimates are supplied. In particular, the small gross Sharpe difference is not presented as significant. Calendar-year breakdowns and diagnostic plots are descriptive; examining them does not increase the number of independent holdout observations.
+
+\paragraph{Model limitations and future work.}
+The model is additive and linear, its feature set is narrow, and monthly refitting can lag rapid changes. Binary allocations ignore confidence and expected transaction costs. A no-trade region, smoother position map, or pre-specified investable risk-matched benchmark is a reasonable future question. Each would alter the research design and require a new evaluation protocol. None is chosen retrospectively here as an allegedly improved strategy.
+
+\section{Conclusion}
+\label{sec:conclusion}
+A small Ridge model with explicit information timing, validation-only selection, and reproducible accounting does not outperform SPY buy-and-hold after the stated costs. Its \RidgeCAGR{} CAGR and \RidgeSharpe{} Sharpe fall below the benchmark's \BHCAGR{} and \BHSharpe{}. Lower drawdown accompanies lower equity exposure, while frequent switching turns approximate gross Sharpe parity into net underperformance. The study's useful output is a transparent empirical result and an inspectable explanation of the implementation gap. The accompanying supplement supplies the target derivation, accounting proofs, complete tables, fit audits, and exact reproduction commands.

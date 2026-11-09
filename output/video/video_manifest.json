@@ -1,10 +1,10 @@
 {
-  "duration_seconds": 962.31,
-  "duration_minutes": 16.0385,
+  "duration_seconds": 967.69,
+  "duration_minutes": 16.12816666666667,
   "resolution": "1280x720",
   "fps": 10,
   "audio": "AAC mono, synthetic macOS Samantha voice, 130 wpm",
-  "word_count": 2222,
+  "word_count": 2232,
   "chapters": [
     {
       "chapter": 1,
@@ -118,12 +118,12 @@
       "chapter": 19,
       "title": "Reproduce and inspect the artifacts",
       "start_seconds": 859.14,
-      "duration_seconds": 52.82
+      "duration_seconds": 58.2
     },
     {
       "chapter": 20,
       "title": "Conclusion and honest next steps",
-      "start_seconds": 911.96,
+      "start_seconds": 917.34,
       "duration_seconds": 50.01
     }
   ],

@@ -11,7 +11,10 @@ jobs:
           cache: pip
       - run: python -m pip install -r requirements.txt
       - run: python -m pytest -q
-      - name: Build report from published derived results
+      - uses: wtfjoke/setup-tectonic@v4
+        with:
+          tectonic-version: '0.17.0'
+      - name: Compile LaTeX report from published derived results
         run: python -m project2.report
       - name: Verify report length
-        run: python -c "import pdfplumber; p=pdfplumber.open('output/pdf/Group_X_Report.pdf'); assert len(p.pages)==21"
+        run: python -c "import pdfplumber; p=pdfplumber.open('output/pdf/Group_X_Report.pdf'); assert 15 <= len(p.pages) <= 25"

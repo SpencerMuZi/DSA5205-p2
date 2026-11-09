@@ -1,0 +1,21 @@
+{
+  "output/tables/annual_metrics.csv": "eb8cbf0f842887f276862b3a9288f337d30f3c43866b6871b87c142be4ed81a3",
+  "output/tables/test_metrics.csv": "40e27143445620b97c8beafc4514339c5913d074ee3a334330768d180478c8f0",
+  "output/tables/validation_fit_audit.csv": "79086fb3cd8ced26cb0c20b4330baab71d3f0c937bd17cedfb710d5ee811ed35",
+  "output/tables/dividend_event_checks.csv": "8175c631c80605459f079e0064fa7b6f2e0347a99a767819dee546dd15815849",
+  "output/tables/test_path_buy_hold.csv": "73294d695aa5bda96973c61e72b325482a0ebe8e3e8017e755082805d4a64114",
+  "output/tables/validation_predictions_alpha_1.csv": "2aac6910640944b5ae48aae5804b58482e98e0bd986a9d35097e07efbeb7611e",
+  "output/tables/test_path_ma20.csv": "5f714364a451402220d589f8bbbb8edcf3fa8262fc59033bdd3a5a72de815013",
+  "output/tables/test_predictions.csv": "0ccaeaf2351cf3c005bced9b61d1a2db97632c90aa4ba91c39a32692d81aaa2c",
+  "output/tables/cost_sensitivity.csv": "7c46667dedf3b1e2631c9f2424432c4e5c2234fcb4247674d9364e3b659e3963",
+  "output/tables/validation_grid.csv": "f29a8270ef56ea480449b4b9b9bbb6287b71c8318ffb2d8f6f73eed2198ca326",
+  "output/tables/test_fit_audit.csv": "33c486176c43550ae6a9d142d6cc4507b5f821a4c5400f2646ba1bd428b8d414",
+  "output/tables/validation_predictions_alpha_10.csv": "8ba9dbf130f339bc2464f99b817c9e1a8f8302402243f628c6891cb3b96a9497",
+  "output/tables/validation_predictions_alpha_0.1.csv": "45c99dfd753ee62e34eadbaec5570ff24bcc60f4f81f354c809a5f3fb8824ecf",
+  "output/tables/validation_predictions_alpha_100.csv": "ab0918e44b3ad8c2bde70beb94c121769696c825e3b0469366deb5f521a97e26",
+  "output/tables/test_path_ridge.csv": "8b4418eb2d3036ae1afe7b89dd6b5648acfaa55bf52a09a0d04b27ec362fc6c5",
+  "output/selection.json": "280909c2f1c0ed550f95a4dc41fc9c8ef6fdfbd070ff2758d2327eacf47c397b",
+  "output/prediction_metrics.json": "b94b6659471b04a04f88b2eaf959e18f6ece1d5e4b25bcbc8cfe9fb6d3bb0d7e",
+  "output/data_audit.json": "adcef1fb29542a2feee576eab87957fc4def1dc8ee630942be4dc26fa6d32797",
+  "output/run_manifest.json": "96467bc0c3d0d6909734e3040075edac5c1e3eb34d0799a996d1f8c588d1a601"
+}

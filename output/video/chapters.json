@@ -209,10 +209,10 @@
     "points": [
       "README: exact commands and expected outputs",
       "Fit audits, predictions, and portfolio paths",
-      "Report: 21 pages; identity fields blank",
+      "LaTeX report: 18 pages; identity fields blank",
       "Raw market-data cache excluded from Git"
     ],
-    "narration": "The repository contains exact setup and run commands, pinned package versions, the frozen configuration, input provenance, the validation selection file, model fit audits, predictions, and portfolio accounting tables. Figures and the twenty one page report are generated from those saved results. The walkthrough log records the commands actually executed and their exit codes. Team names and contributions are intentionally blank until the user supplies them; no participation is invented. The raw vendor price cache is excluded from Git, so a clean checkout downloads its own copy or uses an authorized matching local snapshot. If upstream data change, the stored lock refuses to overwrite the original experiment silently. A revised input requires a separately disclosed run.",
+    "narration": "The repository contains exact setup and run commands, pinned package versions, the frozen configuration, input provenance, the validation selection file, model fit audits, predictions, and portfolio accounting tables. Figures and the 18 page LaTeX report are generated from those saved results. The walkthrough log records the original research commands actually executed and their exit codes. The paper rewrite has a separate compilation manifest. Team names and contributions are intentionally blank until the user supplies them; no participation is invented. The raw vendor price cache is excluded from Git, so a clean checkout downloads its own copy or uses an authorized matching local snapshot. If upstream data change, the stored lock refuses to overwrite the original experiment silently. A revised input requires a separately disclosed run.",
     "figure": null,
     "log_index": null
   },

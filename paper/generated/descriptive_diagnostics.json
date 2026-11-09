@@ -1,0 +1,9 @@
+{
+  "positive_return_fraction": 0.5349301397205589,
+  "forecasts_within_5bps_fraction": 0.37325349301397204,
+  "mean_abs_forecast_bps": 9.919207130511241,
+  "prediction_target_correlation": 0.02948010724130964,
+  "conditional_invested_return_bps": 6.097319875008082,
+  "conditional_cash_return_bps": 2.121046457103092,
+  "note": "Descriptive analysis of frozen predictions only; no refitting, selection, or alternative strategy testing."
+}

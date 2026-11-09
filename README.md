@@ -24,7 +24,8 @@ The validation-only alpha grid is `[0.1, 1, 10, 100]`. Alpha **1** is selected b
 
 ## Deliverables
 
-- [21-page English research report](output/pdf/Group_X_Report.pdf).
+- [18-page LaTeX research report](output/pdf/Group_X_Report.pdf): seven-page two-column main paper and an eleven-page technical supplement.
+- [Editable LaTeX sources and build instructions](paper/README.md); a standalone source ZIP is included in the release assets.
 - [Derived tables](output/tables), [nine figures](output/figures), [selection lock](output/selection.json), and [data audit](output/data_audit.json).
 - [Video script](output/video/walkthrough_script.md), [actual executed-stage log](output/video/demo_run.log), and [chapter metadata](output/video/chapters.json).
 - Narrated MP4 and code ZIP: [release assets](https://github.com/SpencerMuZi/DSA5205-p2/releases/latest).
@@ -42,6 +43,8 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 python -m pytest -q
 ```
+
+Report typesetting additionally requires [Tectonic](https://tectonic-typesetting.github.io/) (tested: 0.17.0) or a TeX distribution with `latexmk`. On macOS, install with `brew install tectonic`; first compilation downloads TeX packages and fonts. The report source is also suitable for a standard LaTeX editor; see [paper/README.md](paper/README.md).
 
 On Windows, activate with `.venv\Scripts\activate`. Core analysis and report generation are cross-platform. Automated voice synthesis uses macOS `say`; the finished MP4 is provided separately so macOS is not needed to reproduce the research.
 
@@ -132,7 +135,7 @@ Cost is a stated pre-trade-equity haircut. It is not a detailed brokerage execut
 
 [The clean-environment check](output/reproducibility_check.json) uses a fresh isolated virtual environment and fresh work directory with the **same downloaded input snapshot**. The validation grid, final predictions, fit audits, and metric CSVs match the original byte for byte. This is not represented as a fresh independent market-data sample.
 
-GitHub Actions runs the integrity suite and rebuilds the 21-page report from the checked-in derived results; it deliberately does not download changing market data during CI.
+GitHub Actions runs the integrity suite and compiles the LaTeX report from the checked-in derived results; it deliberately does not download changing market data during CI. The build checks for overflowing boxes, unresolved references, unchanged result-source digests, and the assignment's 15-25 page range.
 
 ## Report identity and video updates
 
@@ -156,7 +159,9 @@ python -m project2.video --render
 | `project2/core.py` | Features, labels, mature training windows, fitting, fees, metrics |
 | `project2/pipeline.py` | Stage orchestration, validation lock, test results |
 | `project2/figures.py` | Saved-result plots |
-| `project2/report.py` | Reproducible 21-page PDF |
+| `project2/report.py` | LaTeX compilation, reference/layout checks, and PDF build manifest |
+| `project2/paper_assets.py` | Frozen-result tables, numeric macros, vector figures, and cost-attribution checks |
+| `paper/main.tex` | Conference-style manuscript and technical supplement |
 | `project2/demo.py` | Actual stage commands and outputs |
 | `project2/video.py` | Script, frames, synthetic narration, MP4 |
 | `tests/test_integrity.py` | Accounting and leakage regression tests |

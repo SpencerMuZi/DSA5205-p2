@@ -5,10 +5,12 @@
 ## 先看什么
 
 1. `README.md`：完整流程、运行命令与指标定义。
-2. `output/pdf/Group_X_Report.pdf`：21 页英文报告，团队与贡献字段留空。
+2. `output/pdf/Group_X_Report.pdf`：18 页 LaTeX 英文论文，7 页双栏正文与 11 页技术附录；团队与贡献字段留空。
 3. `output/tables/test_metrics.csv`：最终样本外指标。
 4. `output/figures/01_wealth.png` 和 `04_costs.png`：主要结论。
 5. `output/video/walkthrough_script.md`：20 个章节的英文视频讲稿。
+
+LaTeX 主文件是 `paper/main.tex`，正文与附录在 `paper/sections/`，文献在 `paper/references.bib`。表格、数值宏与矢量图由已有回测结果自动生成；编译方式见 `paper/README.md`。新版只改写论文及补充冻结结果的描述性分析，没有重新选模型或修改样本外结果。
 
 ## 讲清楚这六点
 
