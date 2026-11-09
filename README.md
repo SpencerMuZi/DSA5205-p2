@@ -1,12 +1,25 @@
-# DSA5205 Project 2: Regularized SPY Market Timing
+# DSA5205 Project 2 — Group 33
 
-A complete historical research workflow: daily market data -> trailing features -> monthly rolling Ridge fits -> forward validation -> a frozen, cost-aware 2022-2025 holdout. No broker integration or live trading.
+**Regularized Market Timing with Transaction Costs: Evidence from Daily SPY Returns**
 
-**Main finding:** the model reduces some risk but does **not** outperform SPY buy-and-hold on net CAGR or Sharpe. The original result is retained rather than tuned away.
+Members: **Li Chongkai, Zhang Leyao, Zhang Yikai, Ye Tiantian**. The current report includes the team information and contribution statements supplied in the authors' latest Overleaf project.
 
-## Results
+## Current report and source package
 
-January 3, 2022 opening entry through December 31, 2025 opening liquidation; 1,002 holding intervals. Single-side transaction cost: **5 bps**, including initial entry and terminal liquidation. Cash interest and the Sharpe reference rate are assumed zero.
+- [Group 33 report — 21 pages](output/pdf/Group_33_Report.pdf).
+- [Authoritative Overleaf sources](paper/main.tex), [team metadata](paper/metadata.tex), and [build instructions](paper/README.md).
+- [Download the PDF, Overleaf ZIP, and code ZIP](https://github.com/SpencerMuZi/DSA5205-p2/releases/latest).
+- [Compilation record](output/report_build.json) and [source-file identities](paper/source_manifest.json).
+
+The original 31 files from `DSA5205_Project2_Group33_Overleaf` are published unchanged under `paper/`. The supplied prose, title, member order, contributions, and AI-assistance statement are preserved. Tables and vector figures are self-contained. Previous 18-page and 21-page prototype editions remain in the release history; the current report is named **Group_33_Report.pdf**.
+
+For Overleaf, upload `DSA5205_Project2_Group33_Overleaf.zip`, select `main.tex`, and choose **XeLaTeX**. No Python environment or market-data download is needed to compile that archive.
+
+## Research result
+
+The strategy uses five trailing SPY features, monthly rolling Ridge fits, validation-only penalty selection, and a frozen cost-aware holdout. It reduces some realized risk but does **not** outperform SPY buy-and-hold on net CAGR or Sharpe.
+
+Holding dates: 3 January 2022 opening entry through 31 December 2025 opening liquidation; 1,002 intervals. Single-side cost is **5 bps**, including entry and liquidation. Cash interest and the Sharpe reference rate are zero by assumption.
 
 | Metric | Ridge timing | MA20 timing | SPY buy-and-hold |
 |---|---:|---:|---:|
@@ -18,159 +31,101 @@ January 3, 2022 opening entry through December 31, 2025 opening liquidation; 1,0
 | Average equity exposure | 69.36% | 65.27% | 100.00% |
 | Total one-way turnover | 246 | 102 | 2 |
 
-The validation-only alpha grid is `[0.1, 1, 10, 100]`. Alpha **1** is selected by validation net Sharpe; ties choose stronger shrinkage. Test prediction R-squared against a past-only rolling historical mean is **-0.00541**. Ridge's zero-cost Sharpe is about **0.678**, falling to **0.481** at 5 bps.
+The grid `[0.1, 1, 10, 100]` is evaluated only in validation. Alpha **1** is selected by validation net Sharpe, with ties favoring stronger shrinkage. Test prediction R-squared against the past-only historical mean is **-0.00541**. Ridge's zero-cost Sharpe is approximately **0.678**, falling to **0.481** at 5 bps.
 
 ![Holdout wealth](output/figures/01_wealth.png)
 
-## Deliverables
+## Compile the supplied report
 
-- [18-page LaTeX research report](output/pdf/Group_X_Report.pdf): seven-page two-column main paper and an eleven-page technical supplement.
-- [Editable LaTeX sources and build instructions](paper/README.md); a standalone source ZIP is included in the release assets.
-- [Derived tables](output/tables), [nine figures](output/figures), [selection lock](output/selection.json), and [data audit](output/data_audit.json).
-- [Video script](output/video/walkthrough_script.md), [actual executed-stage log](output/video/demo_run.log), and [chapter metadata](output/video/chapters.json).
-- Narrated MP4 and code ZIP: [release assets](https://github.com/SpencerMuZi/DSA5205-p2/releases/latest).
-- [Chinese project guide](docs/PROJECT_GUIDE_ZH.md) and [submission checklist](docs/SUBMISSION_CHECKLIST.md).
+With XeLaTeX and BibTeX installed:
 
-**Team name, roster, and contribution fields are intentionally blank.** The video is a disclosed synthetic-narration review draft over real charts and captured command output. It is not team-member narration or a live screen recording. Review both report and video before submission.
+```bash
+cd paper
+latexmk -xelatex main.tex
+```
 
-## Setup
+Alternatively, use `tectonic --untrusted main.tex` in `paper/` (verified with Tectonic 0.17.0). These commands produce `paper/main.pdf`.
 
-Python **3.12** is the tested version. Run from the repository root:
+The Python wrapper verifies the published source and research-result fingerprints and writes the submission filename:
+
+```bash
+python -m project2.report
+```
+
+Expected output: `output/pdf/Group_33_Report.pdf` and `output/report_build.json`. The wrapper compiles the supplied manuscript as-is; it does not regenerate its assets or refit the strategy. After intentional manuscript edits, `python -m project2.report --refresh-source-manifest` refreshes source identities while leaving research-input checks active. Team details are maintained in `paper/metadata.tex`.
+
+## Reproduce the analysis
+
+Python **3.12** is the tested version. From the repository root:
 
 ```bash
 python3.12 -m venv .venv
 source .venv/bin/activate
-python -m pip install -r requirements.txt
+python -m pip install -r requirements-lock.txt
 python -m pytest -q
-```
-
-Report typesetting additionally requires [Tectonic](https://tectonic-typesetting.github.io/) (tested: 0.17.0) or a TeX distribution with `latexmk`. On macOS, install with `brew install tectonic`; first compilation downloads TeX packages and fonts. The report source is also suitable for a standard LaTeX editor; see [paper/README.md](paper/README.md).
-
-On Windows, activate with `.venv\Scripts\activate`. Core analysis and report generation are cross-platform. Automated voice synthesis uses macOS `say`; the finished MP4 is provided separately so macOS is not needed to reproduce the research.
-
-`requirements.txt` pins the direct dependencies. `requirements-lock.txt` records the clean-install transitive environment; use `python -m pip install -r requirements-lock.txt` for the closest environment match. Platform-specific wheels can still produce small numerical/rendering differences.
-
-## Clean-checkout reproduction
-
-The recommended command writes a **separate run**, preserving the published result and its input/selection fingerprints:
-
-```bash
 python -m project2.pipeline all --workspace runs/reproduction
-python -m project2.report --workspace runs/reproduction
 ```
 
-This downloads Yahoo history into `runs/reproduction/data/raw/spy_daily.csv`, performs the calendar/data audit, evaluates four validation candidates, locks alpha, evaluates only the chosen holdout model, saves tables/figures, and creates `runs/reproduction/output/pdf/Group_X_Report.pdf`.
+On Windows PowerShell, activate with `.venv\Scripts\Activate.ps1`. `requirements.txt` pins direct dependencies; `requirements-lock.txt` records the clean-install transitive environment.
 
-Expected console output includes **4,024 sessions**, **64 dividend events**, **0 splits**, **alpha=1**, and the metric table above, conditional on matching vendor data. Yahoo may revise adjusted histories. Check `data/provenance.json` and raw SHA-256 digests before claiming exact numerical reproduction. A changed download is a new input snapshot, not permission to tune on the holdout.
+The analysis command creates a separate workspace, downloads historical Yahoo data if no cache exists, audits exchange sessions and corporate actions, validates four penalties, locks selection, and evaluates only the selected holdout model. Results go to `runs/reproduction/output/`. Expected output includes **4,024 sessions, 64 dividend events, 0 splits, alpha=1**, and the metrics above, conditional on matching the vendor snapshot.
 
-Within a workspace with cached data, reruns use that cache. Never pass `--refresh` to an established run unless you intend to check for upstream revisions; changed data cause the selection lock to refuse overwriting the original experiment.
+The manuscript appendix pins original analysis commit `2e2e265ba9d007c94279225febaa15a054dff7cf`. That identifies the research implementation; the current publication commit additionally contains the finalized Group 33 manuscript. The frozen research outputs and selection remain unchanged.
 
-The same commands without `--workspace` operate on the repository's root `data/` and `output/`. This is useful with an authorized local input matching the published digest. The raw price CSV is deliberately **not** included in Git or the code ZIP.
+Report compilation and analysis reproduction are separate operations. A fresh vendor download may differ after historical revisions. The supplied report represents its recorded snapshot, and the report wrapper refuses to present changed research outputs as that same frozen manuscript. Update and disclose a manuscript's tables deliberately if its underlying experiment changes.
 
-## Individual stages
+Raw prices are excluded from Git and the code ZIP. Provenance is in [data/provenance.json](data/provenance.json). Identical-input reproduction is documented in [output/reproducibility_check.json](output/reproducibility_check.json).
 
-For a separate run, append `--workspace runs/reproduction` to each pipeline command:
+## Individual research stages
+
+Append `--workspace runs/reproduction` to use a separate run directory:
 
 ```bash
 python -m project2.pipeline fetch
 python -m project2.pipeline validate
 python -m project2.pipeline test
 python -m project2.pipeline figures
-python -m project2.report
 ```
 
-`validate` selects alpha before `test`. `test` checks the protocol, input, and validation-table fingerprints. Repeating an identical frozen pipeline for reproducibility is allowed; it does not create a new independent holdout.
+Within an established run, cached input is reused. `validate` locks the selected alpha before `test`; changed protocol or input fingerprints refuse to overwrite the original selection. Repeating a frozen run checks reproducibility and does not create a fresh independent holdout.
 
-## Research protocol
+## Frozen design and accounting
 
-| Design choice | Frozen setting |
-|---|---|
-| Asset | SPY, USD |
-| Requested history | 2010-01-01 inclusive to 2026-01-01 exclusive |
-| Initial development | 2010-2018 |
-| Forward validation | Holding intervals within 2019-2021 |
-| Final holdout | Holding intervals within 2022-2025 |
-| Features | Adjusted returns over 1/5/20 sessions, MA20 gap, 20-session return SD |
-| Model | Training-only StandardScaler -> Ridge, SVD solver |
-| Rolling window | Most recent 1,260 fully realized labels; minimum 1,000 |
-| Refitting | First signal, then first decision session of each new calendar month |
-| Only selected parameter | Ridge alpha: 0.1 / 1 / 10 / 100 |
-| Selection rule | Highest validation net Sharpe at 5 bps; ties within 1e-12 choose larger alpha |
-| Position map | Prediction > 0: SPY weight 1; otherwise cash weight 0 |
-| Decision / execution | After close t / open t+1 |
-| Holding interval | Open t+1 to open t+2 |
-| Benchmark rules | SPY buy-and-hold; fixed close > MA20 timing |
-| Costs | 5 bps main; 0/10 bps sensitivity with the same positions |
-| Rates / constraints | Cash = 0, Sharpe rf = 0, no leverage, no shorting |
-
-The configuration was fixed before the first download in this implementation on 2026-11-09. This is **not** an externally preregistered historical experiment. The test years were already in the past at design time.
-
-### Label and distribution accounting
-
-For a signal at close t:
+- Asset: SPY, USD; daily exchange sessions, January 2010–December 2025.
+- Development: 2010–2018; validation holding intervals: 2019–2021; test: 2022–2025.
+- Features: adjusted returns over 1/5/20 sessions, MA20 gap, and 20-session return SD.
+- Training: latest 1,260 mature labels, minimum 1,000; training-only scaling; Ridge SVD solver; monthly refits.
+- Rule: forecast > 0 means SPY weight 1; otherwise cash weight 0. No leverage or shorting.
+- Timing: after-close signal, next-open entry, following-open exit/rebalance.
+- Costs: 5 bps main; 0/10 bps sensitivity using the same positions.
+- Benchmarks: SPY buy-and-hold and a fixed MA20 rule, with common dates and costs.
 
 ```text
 target[t] = (raw_open[t+2] + dividend_ex_date[t+2]) / raw_open[t+1] - 1
-```
-
-A purchase at the ex-date open is not entitled to that day's distribution. Holding into the next ex-date open is entitled. The code credits an ex-date dividend receivable at exit, abstracting from actual payment-date cash. SPY has no splits in this sample; an observed split causes explicit failure pending an extended share-accounting implementation.
-
-At fit date t, training labels must satisfy `exit_date <= t`; the preceding signal row alone is not enough to determine eligibility. Full-history adjusted price **levels** are not predictors. Trailing ratios/returns are invariant to a common later backward-adjustment factor; arbitrary vendor revisions remain a limitation.
-
-### Fees and performance conventions
-
-```text
-turnover[t] = abs(weight[t] - weight[t-1]), with previous weight initially 0
-growth[t] = (1 - cost * turnover[t]) * (1 + weight[t] * target[t])
+turnover[i] = abs(weight[i] - weight[i-1]), previous weight initially 0
+growth[i] = (1 - cost * turnover[i]) * (1 + weight[i] * target[i])
 growth[last] *= (1 - cost * weight[last])  # terminal liquidation
 ```
 
-Cost is a stated pre-trade-equity haircut. It is not a detailed brokerage execution model. Binary weights avoid intermediate allocation drift. Annualization uses 252 holding intervals; maximum drawdown includes the initial wealth peak. Annual results use the continuous path without artificial year-end liquidation.
+Entry on an ex-date earns no same-day dividend; a position carried into the exit ex-date does. The stated convention credits an ex-date receivable, abstracting from payment-date cash. No splits occur in the supported sample; unsupported splits cause explicit failure. At fit date t, training labels must satisfy `exit_date <= t`.
 
-`output/exposure_diagnostic.json` is explicitly **ex post and gross**: it uses test-average exposure, so it is not an investable or pre-specified alternative strategy.
+Fees are pre-trade-equity haircuts, not a detailed broker execution model. Annualization uses 252 intervals; drawdown includes initial capital. Annual results use continuous portfolio accounting. The constant-exposure calculation in `output/exposure_diagnostic.json` is explicitly ex post and gross, rather than an investable comparator.
 
-## Tests and clean-environment check
+## Validation and artifact map
 
-`tests/test_integrity.py` covers label/execution alignment, ex-date entitlement, future-price perturbations, adjusted-feature invariance, label maturity, training-only scaling, monthly refits, fee timing, cash positions, period boundaries, invalid data, and initial-capital drawdown. Synthetic fixtures are used only in these tests.
+Eleven tests cover execution/label timing, dividend entitlement, future-data perturbation, adjustment invariance, mature outcomes, past-only scaling, monthly refits, fee timing, cash positions, reporting boundaries, invalid data, and drawdown. Synthetic fixtures are used only for tests. GitHub Actions runs these checks and compiles the current Group 33 report from its included assets, without downloading market data.
 
-[The clean-environment check](output/reproducibility_check.json) uses a fresh isolated virtual environment and fresh work directory with the **same downloaded input snapshot**. The validation grid, final predictions, fit audits, and metric CSVs match the original byte for byte. This is not represented as a fresh independent market-data sample.
-
-GitHub Actions runs the integrity suite and compiles the LaTeX report from the checked-in derived results; it deliberately does not download changing market data during CI. The build checks for overflowing boxes, unresolved references, unchanged result-source digests, and the assignment's 15-25 page range.
-
-## Report identity and video updates
-
-Fill `team_name`, `team_members`, and `contributions` in `config.json`, then run `python -m project2.report`. Authorship metadata is excluded from the research protocol hash, so filling names does not alter the selected model. Rename `Group_X_Report.pdf` to your actual group number.
-
-On macOS, to capture actual staged rerun output and rebuild the synthetic walkthrough:
-
-```bash
-python -m project2.demo
-python -m project2.video
-python -m project2.video --render
-```
-
-`demo` uses the root local cache and frozen result settings; it does not select new strategies. `video` builds a review script and frames. `--render` requires the installed Samantha voice and FFmpeg from `imageio-ffmpeg`, produces a 15-25 minute MP4, and verifies duration. Temporary audio/segments stay in ignored `tmp/`.
-
-## Source map
-
-| File | Responsibility |
+| Path | Role |
 |---|---|
-| `project2/data.py` | Data download, provenance, exchange calendar, corporate actions |
-| `project2/core.py` | Features, labels, mature training windows, fitting, fees, metrics |
-| `project2/pipeline.py` | Stage orchestration, validation lock, test results |
-| `project2/figures.py` | Saved-result plots |
-| `project2/report.py` | LaTeX compilation, reference/layout checks, and PDF build manifest |
-| `project2/paper_assets.py` | Frozen-result tables, numeric macros, vector figures, and cost-attribution checks |
-| `paper/main.tex` | Conference-style manuscript and technical supplement |
-| `project2/demo.py` | Actual stage commands and outputs |
-| `project2/video.py` | Script, frames, synthetic narration, MP4 |
-| `tests/test_integrity.py` | Accounting and leakage regression tests |
+| `paper/main.tex`, `metadata.tex`, `sections/` | Authoritative manuscript and team information |
+| `paper/generated/`, `paper/figures/` | Supplied tables, numeric macros, and vector figures |
+| `paper/source_manifest.json` | Original source-file identities |
+| `project2/data.py`, `core.py`, `pipeline.py` | Historical data, forecasting, selection, and accounting |
+| `project2/report.py` | Verified compilation of the supplied manuscript |
+| `project2/package.py` | Code and standalone Overleaf ZIP packaging |
+| `output/tables/` | Validation, forecasts, fit audits, returns, and costs |
+| `output/report_build.json` | Current report compilation record |
 
-## Data and method references
+`project2/paper_assets.py` is the legacy v1.1 asset generator and is guarded against overwriting the final supplied manuscript. Original research-stage logs and the earlier synthetic walkthrough under `output/video/` are historical materials; they are not a completed Group 33 presentation. Historical MP4 assets remain in [release v1.1.0](https://github.com/SpencerMuZi/DSA5205-p2/releases/tag/v1.1.0).
 
-- [yfinance historical download documentation](https://ranaroussi.github.io/yfinance/reference/api/yfinance.download.html).
-- [scikit-learn Ridge](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html) and [StandardScaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html).
-- [Exchange calendars](https://github.com/gerrymanoim/exchange_calendars).
-- Chinco, Clark-Joseph, and Ye (2019), [Sparse Signals in the Cross-Section of Returns](https://doi.org/10.1111/jofi.12733), and Kelly, Malamud, and Zhou (2024), [The Virtue of Complexity in Return Prediction](https://doi.org/10.1111/jofi.13298): assignment-provided context, not replicated implementations.
-
-The course assignment PDF is not redistributed. No secrets, account data, raw vendor price history, or live-trading functionality are included. AI implementation assistance is disclosed in the report; team members should review and understand the artifacts and follow applicable course rules.
+The original course handout and raw vendor prices are not redistributed. No secrets or live-trading functionality are included. The authors' AI-assistance and contribution statements are retained in the report.

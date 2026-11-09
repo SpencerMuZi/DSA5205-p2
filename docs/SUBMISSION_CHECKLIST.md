@@ -1,17 +1,14 @@
-# Submission checklist
+# Group 33 submission checklist
 
-- [x] Complete historical data -> training -> validation -> final holdout workflow.
-- [x] Frozen four-candidate Ridge search and one declared selection rule.
-- [x] Explicit execution timing, label maturity, scaling, dividend entitlement, and costs.
-- [x] Common-date investable benchmark and fixed rule baseline.
-- [x] Net metrics, wealth, drawdown, yearly results, prediction checks, and cost sensitivity.
-- [x] Reproducible scripts, direct dependency pins, tests, and saved artifacts.
-- [x] 18-page LaTeX paper (two-column main text and technical supplement), compiled from frozen results and visually reviewed.
-- [ ] Fill actual group number, team name, full roster, and true contribution note.
-- [ ] Rename `Group_X_Report.pdf` using the actual group number.
-- [ ] Review the synthetic-narration walkthrough or record a team presentation; verify the final video meets course requirements.
-- [ ] Confirm all team members belong to the same Canvas Project2 team.
-- [ ] One team member submits report, accessible/downloadable MP4 or link, and code ZIP or GitHub link to Canvas.
-- [ ] Check all uploaded files and video permissions before **12 November 2026, 23:59 SGT**.
+- [x] Publish the latest supplied Overleaf source, including its team and contribution metadata.
+- [x] Compile the 21-page report as `Group_33_Report.pdf`.
+- [x] Preserve the original model, selection, input fingerprints, and numerical results.
+- [x] Include code, pinned dependencies, tests, derived results, and exact reproduction commands.
+- [x] Provide a self-contained Overleaf ZIP with tables and vector figures.
+- [ ] Team members confirm the final report, contributions, and AI-assistance statement.
+- [ ] Complete and review the team's 15-25 minute presentation. Earlier synthetic walkthroughs are historical drafts.
+- [ ] Confirm all members belong to the same Canvas Project2 team.
+- [ ] One member submits the report, accessible/downloadable video, and code ZIP or GitHub link.
+- [ ] Verify all submitted files and access permissions before 12 November 2026, 23:59 SGT.
 
-The original assignment PDF and raw vendor price history are not redistributed. Authorship fields are intentionally blank at the user's request. Canvas submission is not performed by this repository workflow.
+The current source is `paper/main.tex`; edit team details in `paper/metadata.tex`. The original assignment and raw vendor price history are not redistributed. Canvas submission is not performed by the publication workflow.

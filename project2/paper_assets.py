@@ -1,4 +1,4 @@
-"""Derive LaTeX tables and vector figures from the frozen results, without refitting."""
+"""Legacy v1.1 asset generator; the authoritative Group 33 sources are compiled as supplied."""
 from __future__ import annotations
 
 import json
@@ -31,6 +31,8 @@ def table(name, headers, rows, alignment=None):
 
 
 def build():
+    if Path('paper/metadata.tex').exists():
+        raise RuntimeError('Group 33 uses supplied Overleaf sources. Run python -m project2.report to compile them without overwriting their tables, figures, or metadata.')
     DEST.mkdir(parents=True, exist_ok=True)
     config = json.loads(Path('config.json').read_text())
     author_line = r'\normalsize DSA5205 Project 2\quad\textbar\quad November 2026'

@@ -1,0 +1,71 @@
+\section{Portfolio Construction and Evaluation}
+\label{sec:accounting}
+\subsection{Forecast-to-position rule and investment benchmarks}
+The portfolio follows the fixed sign rule
+\begin{equation}
+w_t=\ind\{\widehat y_t>0\}.
+\label{eq:weight}
+\end{equation}
+A positive prediction allocates all capital to SPY at the next open; otherwise the portfolio holds cash. Positions are unlevered and long-only, with a maximum equity weight of one. Cash earns zero, and the Sharpe reference rate is also zero.
+
+The zero threshold follows the gross allocation comparison under these constraints: a positive predicted SPY return favors equity over zero-return cash. The binary map keeps that directional decision separate from an additional position-sizing model. It also makes each threshold crossing economically consequential, because the entire portfolio switches assets. Transaction costs enter validation and all net performance calculations; they do not shift the trading threshold or introduce a no-trade region in the implemented rule.
+
+Two investable strategies use the same holding dates. Buy-and-hold remains in SPY throughout. The fixed MA20 strategy holds SPY when adjusted close exceeds its trailing twenty-session average, equivalently when the moving-average gap in Table~\ref{tab:features} is positive. It uses the same next-open execution as Ridge. Neither its window nor its threshold is selected in validation.
+
+The two comparisons have different roles. Buy-and-hold measures whether active allocation improves on retaining the traded market exposure. MA20 asks whether estimating a combination of signals improves on a direct, fixed trend rule built from the same information set. Giving all strategies the same opening-to-opening returns, distributions, and fee convention makes their differences attributable to their positions and turnover rather than to mismatched price series or evaluation dates.
+
+Prediction performance is compared with the historical mean of the same mature training outcomes used at each monthly refit. This reference forecast remains fixed between refits, matching the main model's update schedule. It provides a simple alternative against which to assess squared-error prediction.
+
+\subsection{Transaction costs and compounded wealth}
+Index the evaluated holding intervals by $i=1,\ldots,N$. The portfolio starts from cash, $w_0=0$, and the one-way turnover at entry is $q_i=|w_i-w_{i-1}|$. With single-side fee $c$, its interval growth factor is
+\begin{equation}
+G_i(c)=(1-cq_i)(1+w_i y_i).
+\label{eq:growth}
+\end{equation}
+Fees are deducted as a fraction of pre-trade equity before earning the interval return. Terminal liquidation adds a factor $1-cw_N$. Thus
+\begin{equation}
+V_N(c)=\left[\prod_{i=1}^N G_i(c)\right](1-cw_N),\qquad V_0=1.
+\label{eq:wealth}
+\end{equation}
+An unchanged SPY or cash position has no trading charge. Buy-and-hold pays once on entry and once on liquidation. Binary positions require no intermediate fractional-weight rebalancing.
+
+The main cost is $c=0.0005$, or 5 basis points per one-way unit. Zero- and 10-basis-point scenarios use the same predictions and positions. This isolates the effect of fees on the frozen trading path. Calendar-year returns are extracted from the continuous portfolio path; year boundaries do not create additional transactions.
+
+The cost mechanism has a simple exact form. With $K=\sum_iq_i+w_N$, every charged trade multiplies wealth by $1-c$, so
+\begin{equation}
+\frac{V_N(c)}{V_N(0)}=(1-c)^K.
+\label{eq:drag}
+\end{equation}
+The annualized log-wealth drag is $-(252K/N)\log(1-c)$. This quantity is additive in log wealth and is distinct from the percentage-point difference between two CAGRs. The numerical attribution is reported with the cost results in Section~\ref{sec:costresults}.
+
+\subsection{Performance measures}
+Let $R_i$ be the net interval return after all applicable fees, including final liquidation. We report the metrics in Table~\ref{tab:metrics}. Annualization uses 252 holding intervals. The reported sample ends at the final opening liquidation rather than the final day's close.
+
+\begin{table}[!htbp]
+\centering\small
+\caption{Evaluation definitions.}
+\label{tab:metrics}
+\begin{tabularx}{\textwidth}{@{}p{.32\textwidth}X@{}}
+\toprule
+Measure & Definition \\
+\midrule
+Total return & $V_N-1$ \\
+Compound annual growth & $\mathrm{CAGR}=V_N^{252/N}-1$ \\
+Arithmetic annual return & $252\overline R$ \\
+Annualized volatility & $\sqrt{252}\,\operatorname{sd}(R_i)$, with sample SD \\
+Sharpe, $r_f=0$ & $252\overline R/[\sqrt{252}\operatorname{sd}(R_i)]$ \\
+Maximum drawdown & $\min_i[V_i/\max(1,V_1,\ldots,V_i)-1]$ \\
+Average equity exposure & $N^{-1}\sum_iw_i$ \\
+Total one-way turnover & $K=\sum_i|w_i-w_{i-1}|+w_N$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+For the historical-mean prediction $\bar y_{d(i)}$, out-of-sample explanatory performance is
+\begin{equation}
+R^2_{\mathrm{OOS}}=1-
+\frac{\sum_i(y_i-\widehat y_i)^2}
+{\sum_i(y_i-\bar y_{d(i)})^2}.
+\label{eq:r2}
+\end{equation}
+The denominator uses a past-only reference, not the test-period mean. Positive values indicate lower squared error than that reference. Directional accuracy and conditional return summaries complement this measure by connecting the sign rule to the realized returns held or missed.

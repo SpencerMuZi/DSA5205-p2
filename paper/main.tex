@@ -1,91 +1,112 @@
-\documentclass[10pt,twocolumn,letterpaper]{article}
-\usepackage[margin=0.75in,top=0.72in,bottom=0.78in,columnsep=0.25in]{geometry}
+% !TeX program = xelatex
+\documentclass[11pt,a4paper]{article}
+\usepackage[left=25mm,right=25mm,top=24mm,bottom=24mm,headheight=14pt,headsep=9mm]{geometry}
 \usepackage[T1]{fontenc}
-\usepackage{amsmath,amsthm,bm}
+\usepackage{amsmath,bm}
 \usepackage{newtxtext,newtxmath}
 \usepackage{microtype}
-\usepackage{graphicx,booktabs,tabularx,array,multirow}
-\usepackage{algorithm,algpseudocode}
-\usepackage[round,authoryear]{natbib}
-\usepackage[font=small,labelfont=bf,labelsep=period]{caption}
-\usepackage{xcolor}
+\usepackage{graphicx,booktabs,tabularx,array}
 \usepackage{enumitem}
+\usepackage{caption}
 \usepackage{fancyhdr}
-\usepackage{placeins}
-\usepackage{listings}
-\usepackage{xurl}
-\usepackage{seqsplit}
-\usepackage[colorlinks=true,allcolors=linkblue,bookmarksnumbered=true]{hyperref}
-\definecolor{linkblue}{HTML}{24536B}
-\definecolor{ink}{HTML}{182535}
-\definecolor{codebg}{HTML}{F3F5F7}
-\hypersetup{pdftitle={Regularized Market Timing under Trading Costs},pdfauthor={},pdfsubject={DSA5205 Project 2: historical SPY research}}
-\setlength{\parindent}{1em}
-\setlength{\parskip}{0pt}
-\setlength{\textfloatsep}{12pt plus 2pt minus 2pt}
-\setlength{\floatsep}{10pt plus 2pt minus 2pt}
-\setlength{\intextsep}{10pt plus 2pt minus 2pt}
-\setlength{\tabcolsep}{4pt}
-\setlength{\emergencystretch}{1.1em}
-\raggedbottom
-\renewcommand{\topfraction}{0.95}
-\renewcommand{\bottomfraction}{0.90}
-\renewcommand{\textfraction}{0.05}
-\renewcommand{\floatpagefraction}{0.78}
-\renewcommand{\dbltopfraction}{0.95}
-\renewcommand{\dblfloatpagefraction}{0.78}
-\makeatletter
-\setlength{\@fptop}{0pt}
-\setlength{\@fpsep}{12pt}
-\setlength{\@fpbot}{0pt plus 1fil}
-\makeatother
-\renewcommand{\bibfont}{\small}
-\setlength{\bibsep}{1.5pt}
-\setlist[itemize]{leftmargin=*,topsep=3pt,itemsep=2pt,parsep=0pt}
-\setlist[enumerate]{leftmargin=*,topsep=3pt,itemsep=2pt,parsep=0pt}
-\captionsetup[table]{skip=5pt}
-\captionsetup[figure]{skip=5pt}
-\lstset{basicstyle=\ttfamily\footnotesize,backgroundcolor=\color{codebg},frame=single,rulecolor=\color{black!15},breaklines=true,columns=fullflexible,keepspaces=true,showstringspaces=false,xleftmargin=5pt,xrightmargin=5pt,aboveskip=8pt,belowskip=8pt}
-\newcommand{\E}{\mathbb{E}}
-\newcommand{\R}{\mathbb{R}}
+\usepackage{titlesec}
+\usepackage{needspace,placeins}
+\usepackage[numbers,square,sort&compress]{natbib}
+\renewcommand{\bibfont}{\small\raggedright}
+\setlength{\bibsep}{7pt}
+\usepackage{xcolor}
+\usepackage{url,listings}
+\definecolor{accent}{HTML}{24536B}
+\definecolor{rulegray}{HTML}{D5DADD}
+\definecolor{codegray}{HTML}{F5F6F7}
+\usepackage[colorlinks=true,linkcolor=accent,citecolor=accent,urlcolor=accent,bookmarksnumbered=true]{hyperref}
+\hypersetup{pdftitle={Regularized Market Timing with Transaction Costs: Evidence from Daily SPY Returns},pdfauthor={Li Chongkai; Zhang Leyao; Zhang Yikai; Ye Tiantian},pdfsubject={DSA5205 Project 2, Group 33}}
+\input{metadata}
+\input{generated/numbers}
+\linespread{1.10}
+\setlength{\parindent}{1.25em}
+\setlength{\parskip}{3pt}
+\setlength{\emergencystretch}{2em}
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.16}
+\setlength{\textfloatsep}{15pt plus 2pt minus 3pt}
+\setlength{\intextsep}{14pt plus 2pt minus 3pt}
+\renewcommand{\topfraction}{0.90}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.12}
+\renewcommand{\floatpagefraction}{0.70}
+\captionsetup{font=small,labelfont=bf,labelsep=period,justification=justified,singlelinecheck=false}
+\captionsetup[table]{position=top,skip=6pt}
+\captionsetup[figure]{skip=7pt}
+\titleformat{\section}{\large\bfseries}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.65em}{}
+\titlespacing*{\section}{0pt}{19pt plus 3pt minus 2pt}{8pt}
+\titlespacing*{\subsection}{0pt}{13pt plus 2pt minus 2pt}{5pt}
+\setlist[itemize]{leftmargin=1.4em,topsep=4pt,itemsep=3pt,parsep=0pt}
+\setlist[enumerate]{leftmargin=1.7em,topsep=4pt,itemsep=3pt,parsep=0pt}
+\lstset{basicstyle=\ttfamily\footnotesize,backgroundcolor=\color{codegray},frame=single,rulecolor=\color{rulegray},breaklines=true,columns=fullflexible,keepspaces=true,showstringspaces=false,xleftmargin=5pt,xrightmargin=5pt,aboveskip=9pt,belowskip=9pt}
+\newcommand{\code}[1]{\nolinkurl{#1}}
 \newcommand{\ind}{\mathbb{I}}
-\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
-\newcommand{\figpath}{generated}
-\newtheorem{proposition}{Proposition}
-\newtheorem{remark}{Remark}
+\newcommand{\tabnote}[1]{\par\vspace{4pt}{\footnotesize\noindent #1\par}}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\footnotesize\itshape Regularized Market Timing under Trading Costs}
-\fancyhead[R]{\footnotesize DSA5205}
+\fancyhead[L]{\small\itshape Regularized Market Timing with Transaction Costs}
+\fancyhead[R]{\small Project 2}
 \fancyfoot[C]{\small\thepage}
 \renewcommand{\headrulewidth}{0.25pt}
-\setlength{\headheight}{14pt}
-\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
-\input{generated/numbers}
-\input{generated/authors}
-\title{\vspace{-1.5em}\bfseries\Large Regularized Market Timing under Trading Costs:\\A Reproducible Study of Daily SPY Returns}
-\author{\PaperAuthors}
-\date{\vspace{-1.4em}}
-
+\raggedbottom
 \begin{document}
-\maketitle
-\begin{abstract}
-Can a small regularized return model improve daily equity timing once its forecasts are translated into executable, cost-bearing positions? We study SPY using five trailing trend and volatility features, monthly Ridge refits, and a fixed 1,260-observation window. Four regularization strengths are compared on 2019--2021 validation data; the selected model is then evaluated on 2022--2025 without further strategy selection. Features, training labels, executions, and dividend entitlements are aligned explicitly in time. At a single-side cost of 5 basis points, the strategy achieves \RidgeCAGR{} compound annual growth and a \RidgeSharpe{} Sharpe ratio, versus \BHCAGR{} and \BHSharpe{} for buy-and-hold. Its maximum drawdown is smaller, but equity exposure is only \RidgeExposure{}. Gross Sharpe parity does not survive the strategy's \TurnoverCount{} units of one-way turnover. Prediction $R^2$ against a past-only historical mean is \OOSRsquared{}. The finding is descriptive rather than a significance claim: regularization and leakage controls make the experiment credible, but do not establish a net timing advantage. Source code, frozen artifacts, accounting derivations, and integrity checks accompany the study.
-\end{abstract}
-
+\begin{titlepage}
+\thispagestyle{empty}
+\vspace*{2mm}
+\begin{center}
+{\large National University of Singapore\par}
+\vspace{2mm}
+{\normalsize MSc in Data Science and Machine Learning\par}
+\vspace{5mm}
+{\normalsize\CourseCode{} --- \CourseName\par}
+\vspace{2mm}
+{\normalsize Project 2 \quad | \quad \TeamName\par}
+\vspace{6mm}
+{\fontsize{22}{26}\selectfont\bfseries Regularized Market Timing\\[4pt]with Transaction Costs\par}
+\vspace{4mm}
+{\large Evidence from Daily SPY Returns\par}
+\vspace{4mm}
+{\normalsize\SubmissionDate\par}
+\end{center}
+\vspace{4mm}
+\noindent\begin{tabularx}{\textwidth}{@{}lXX@{}}
+\toprule
+Member & Full name & Student ID \\
+\midrule
+1 & \MemberOneName & \MemberOneID \\
+2 & \MemberTwoName & \MemberTwoID \\
+3 & \MemberThreeName & \MemberThreeID \\
+4 & \MemberFourName & \MemberFourID \\
+\bottomrule
+\end{tabularx}
+\vspace{3mm}
+\begin{center}
+{\fontsize{14}{17}\selectfont\bfseries Abstract}
+\end{center}
+\vspace{1mm}
+\noindent We investigate whether a small return-prediction model improves daily equity timing after transaction costs. Five trailing trend and volatility features are used to forecast SPY opening-to-opening returns. Ridge regression is refitted monthly on the latest 1,260 realized outcomes. Four regularization strengths are compared during 2019--2021, and the selected rule is evaluated over 2022--2025. Positive forecasts allocate the portfolio to SPY; other forecasts allocate it to cash. At a single-side cost of 5 basis points, the strategy earns \RidgeCAGR{} compound annual growth and a \RidgeSharpe{} Sharpe ratio, compared with \BHCAGR{} and \BHSharpe{} for buy-and-hold. Its lower drawdown accompanies \RidgeExposure{} average equity exposure. The forecast's out-of-sample $R^2$ is \OOSRsquared{} relative to a past-only historical mean. Gross Sharpe is close to the passive benchmark, but 246 charged trade units impose 3.09\% annualized log-wealth drag. The results connect weak prediction, binary position changes, and trading costs: the regularized estimation procedure is reproducible, while the resulting timing rule does not improve net investment performance.
+\vfill
+\noindent{\small Data: January 2010--December 2025. Final evaluation: January 2022--December 2025.}
+\end{titlepage}
+\setcounter{page}{2}
 \input{sections/introduction}
-\input{sections/method}
-\input{sections/experiments}
+\input{sections/data}
+\input{sections/model}
+\input{sections/accounting}
+\input{sections/results}
 \input{sections/discussion}
-
 \FloatBarrier
-\bibliographystyle{plainnat}
+\bibliographystyle{unsrtnat}
 \bibliography{references}
-
 \clearpage
-\onecolumn
 \appendix
-\renewcommand{\theequation}{\thesection.\arabic{equation}}
-\setcounter{equation}{0}
+\numberwithin{equation}{section}
+\counterwithin{table}{section}
 \input{sections/appendix}
 \end{document}

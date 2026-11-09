@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.2.0 — Group 33 supplied Overleaf project
+
+- Published the latest 31-file Group 33 Overleaf project unchanged, including its revised title, confirmed metadata, member order, contribution statements, and AI-assistance disclosure.
+- Compiled `output/pdf/Group_33_Report.pdf` (21 pages) and added standalone Overleaf and complete code packages with Group 33 filenames.
+- Updated the report wrapper and CI to compile the supplied assets without regenerating or overwriting them. Source and frozen research-result identities are verified.
+- Replaced outdated current-version README and submission notes. Earlier report and video drafts remain historical releases.
+- Preserved the original selection and numerical research outputs; only identity metadata in the current configuration was synchronized.
+
 ## v1.1.0 — LaTeX paper edition
 
 - Rewrote the report as a conference-style manuscript: two-column main paper, single-column technical supplement, Times-style text/math, numbered equations, an algorithm, booktabs tables, and author-year references.

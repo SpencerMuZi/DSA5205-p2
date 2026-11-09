@@ -6,3 +6,5 @@
 *.md text eol=lf
 *.json text eol=lf
 *.csv text eol=lf
+# Preserve the supplied Overleaf source files byte-for-byte, including their line endings.
+paper/** -text

@@ -6,7 +6,7 @@ import zipfile
 
 def main():
     names = subprocess.check_output(["git", "ls-files", "-z"]).decode().split("\0")
-    dest = Path("output/package/DSA5205_Project2_Code.zip")
+    dest = Path("output/package/DSA5205_Project2_Group33_Code.zip")
     dest.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(dest, "w", zipfile.ZIP_DEFLATED) as archive:
         for name in names:
@@ -17,11 +17,11 @@ def main():
                 raise RuntimeError(f"Unexpected sensitive/temporary path in Git index: {name}")
             archive.write(path, arcname="DSA5205-p2/" + name)
     print(f"PACKAGE: {dest} ({dest.stat().st_size:,} bytes)")
-    latex = Path('output/package/DSA5205_Project2_LaTeX.zip')
+    latex = Path('output/package/DSA5205_Project2_Group33_Overleaf.zip')
     with zipfile.ZipFile(latex, 'w', zipfile.ZIP_DEFLATED) as archive:
         for path in sorted(Path('paper').rglob('*')):
             if path.is_file() and (path.suffix in {'.tex','.bib','.md','.json'}
-                                   or path.suffix == '.pdf' and path.parent.name == 'generated'):
+                                   or path.suffix == '.pdf' and path.parent.name in {'generated','figures'}):
                 archive.write(path, arcname=str(path.relative_to('paper')))
     print(f"LATEX SOURCE: {latex} ({latex.stat().st_size:,} bytes)")
 

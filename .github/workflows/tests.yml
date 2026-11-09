@@ -17,4 +17,4 @@ jobs:
       - name: Compile LaTeX report from published derived results
         run: python -m project2.report
       - name: Verify report length
-        run: python -c "import pdfplumber; p=pdfplumber.open('output/pdf/Group_X_Report.pdf'); assert 15 <= len(p.pages) <= 25"
+        run: python -c "import pdfplumber; p=pdfplumber.open('output/pdf/Group_33_Report.pdf'); assert 15 <= len(p.pages) <= 25"

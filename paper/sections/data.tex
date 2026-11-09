@@ -1,0 +1,89 @@
+\section{Data and Executable Returns}
+\label{sec:data}
+\subsection{Market, source, and data quality}
+SPY is a US-listed exchange-traded fund tracking the S\&P~500 and serves as both the traded asset and the passive benchmark \citep{spy}. All positions and returns are denominated in US dollars. Daily observations are indexed by New York exchange-session dates, including shortened sessions. No currency conversion is required.
+
+Historical prices are downloaded from Yahoo Finance through \code{yfinance}, with \code{auto_adjust=False}, corporate actions enabled, and automatic repairs disabled \citep{yfinance}. The data contain separate open, high, low, close, adjusted close, volume, dividend, and split fields. Adjusted close is used to construct trailing features; unadjusted opening prices and explicit distributions determine portfolio returns.
+
+\begin{table}[!htbp]
+\centering\small
+\caption{Historical data and quality checks.}
+\label{tab:data}
+\begin{tabularx}{\textwidth}{@{}p{0.39\textwidth}X@{}}
+\toprule
+Item & Recorded result \\
+\midrule
+Requested history & 1 January 2010 to 1 January 2026, end date excluded \\
+Observed sessions & 4 January 2010--31 December 2025; 4,024 sessions \\
+Trading-calendar check & 4,024 expected XNYS sessions; no missing or extra dates \\
+Duplicate dates / missing values & 0 / 0 \\
+Dividend / split events & 64 / 0 \\
+Zero-volume sessions & 0 \\
+Feature warm-up / terminal exclusions & 20 initial sessions / 2 unavailable forward outcomes \\
+Complete labeled observations & 4,002 across the full history \\
+\bottomrule
+\end{tabularx}
+\tabnote{Source: \code{output/data_audit.json}. XNYS session dates are verified with \code{exchange_calendars}.}
+\end{table}
+
+The cleaning routine sorts dates, verifies unique observations, and checks finite positive prices, nonnegative distributions and volume, and OHLC ordering. Expected sessions are checked against the exchange calendar, including special closures \citep{exchangecalendars}. Weekends and holidays are not filled. Missing vendor fields and unsupported splits trigger an error. Observed extreme returns are retained. These rules leave the sample in Table~\ref{tab:data}; no full-sample outlier threshold is estimated.
+
+The source snapshot records its retrieval time, download options, package version, and SHA-256 digest. This identifies the exact input used by the published experiment. Representative distribution checks and the provenance files are summarized in Appendix~\ref{app:audit}.
+
+\subsection{Decision, execution, and label maturity}
+Let $t$ index trading sessions. Features and the forecast are calculated after close $t$. The resulting target position is executed at open $t+1$ and held until open $t+2$. With unadjusted opening price $O_t$ and distribution $D_t$ whose ex-date is $t$, the target is
+\begin{equation}
+y_t=\frac{O_{t+2}+D_{t+2}}{O_{t+1}}-1.
+\label{eq:target}
+\end{equation}
+A share held into the exit ex-date earns that distribution. A share first purchased at the ex-date open does not earn the entry-date distribution. The backtest credits the entitled dividend receivable at exit and applies the same convention to all strategies.
+
+\begin{table}[!htbp]
+\centering\small
+\caption{Information timing for the first test observation.}
+\label{tab:timing}
+\begin{tabularx}{\textwidth}{@{}p{0.31\textwidth}p{0.24\textwidth}X@{}}
+\toprule
+Event & Session & Information used or realized \\
+\midrule
+Signal calculation & 31 December 2021 close & Trailing features and the fitted model \\
+Position execution & 3 January 2022 open & Target position from the previous close \\
+Holding-period exit & 4 January 2022 open & Opening-to-opening return and any entitled dividend \\
+Training eligibility & By 4 January 2022 close & The complete outcome is now observed \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Label maturity determines which rows can enter training. At decision close $d$, a return ending at that morning's open is observed, whereas a return ending at the next session's open is not. Writing $e(t)=t+2$ for the exit session, the training window is
+\begin{equation}
+\mathcal T_d=\operatorname{tail}_{1260}\{t:t<d,\ e(t)\leq d\}.
+\label{eq:train}
+\end{equation}
+The timestamp condition is applied to realized outcomes as well as to feature dates. The latest eligible signal can therefore be more than one session behind the current decision. Every fit exports its first and last training signal, maximum label exit, and sample count.
+
+\subsection{Features and their economic motivation}
+Let $A_t$ be adjusted close and $r_t^A=A_t/A_{t-1}-1$. Table~\ref{tab:features} defines the complete specification. All five features are known after close $t$.
+
+\begin{table}[!htbp]
+\centering\small
+\caption{The five fixed predictors.}
+\label{tab:features}
+\begin{tabularx}{\textwidth}{@{}p{0.20\textwidth}p{0.39\textwidth}X@{}}
+\toprule
+Feature & Definition & Predictive role \\
+\midrule
+One-session return & $A_t/A_{t-1}-1$ & Recent continuation or reversal \\
+Five-session return & $A_t/A_{t-5}-1$ & Approximately weekly trend \\
+Twenty-session return & $A_t/A_{t-20}-1$ & Approximately monthly trend \\
+Moving-average gap & $A_t/\bigl(\frac1{20}\sum_{j=0}^{19}A_{t-j}\bigr)-1$ & Price location relative to its recent mean \\
+Return volatility & Sample SD of $r^A_{t-19},\ldots,r^A_t$ & Recent return uncertainty \\
+\bottomrule
+\end{tabularx}
+\tabnote{The volatility uses 20 returns and denominator 19. The longest required price lookback is 20 sessions. Implementation: \code{project2/core.py::make_samples}.}
+\end{table}
+
+The three return horizons give the model several views of recent price movement. The moving-average gap captures the cumulative location of the price path, while volatility contributes information about the scale of recent movements. Because these predictors share price history, their effects are estimated jointly. A later common multiplicative adjustment of the historical price window cancels from the ratios and return volatility; Appendix~\ref{app:audit} gives the corresponding algebra.
+
+The horizons distinguish immediate price movement from approximately weekly and monthly behavior. A positive return coefficient is consistent with continuation over that feature's horizon; a negative coefficient represents reversal after conditioning on the other inputs. Neither sign is imposed during fitting. The moving-average gap adds information about the location of the endpoint relative to the intervening path: two windows can have the same twenty-session return and different average price levels. Volatility adds a scale measure that the signed return features do not supply. These choices express a small set of competing economic mechanisms, rather than assuming that all recent gains must predict further gains.
+
+SPY makes the allocation question concrete. The same fund is used for signal construction, execution, and the passive investment comparison, avoiding an additional stock-selection problem. Restricting the study to one traded asset also keeps the accounting focused on the forecast-to-position decision: any difference from buy-and-hold comes from when capital is invested and the cost of changing that allocation. The data source supplies both adjusted prices for trailing signals and the raw prices and distributions needed to make that distinction explicit.

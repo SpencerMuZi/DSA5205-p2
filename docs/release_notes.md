@@ -1,16 +1,13 @@
-# Strategy A: LaTeX paper edition
+# Group 33 — authoritative Overleaf source publication
 
-Daily SPY timing with five trailing features, monthly rolling Ridge fitting, validation-only alpha selection, and final 2022-2025 cost-aware evaluation.
+Published the authors' latest `DSA5205_Project2_Group33_Overleaf` project, including its supplied title, metadata, member order, contribution statements, bibliography, tables, vector figures, and AI-assistance disclosure.
 
-Included assets:
+Assets:
 
-- `Strategy_A_Walkthrough.mp4`: a 15-25 minute, clearly disclosed synthetic-narration **review draft** using actual results and captured command outputs. It is not team-member narration or a live screen recording.
-- `DSA5205_Project2_Code.zip`: source, pinned dependencies, tests, report, figures, derived tables, and walkthrough script. No raw vendor price history or secrets.
-- `Group_X_Report.pdf`: 18-page LaTeX paper, with a seven-page two-column main text and an eleven-page technical supplement. Team and contribution fields remain intentionally blank.
-- `DSA5205_Project2_LaTeX.zip`: standalone, editable LaTeX manuscript with bibliography, generated tables, and vector figures; ready for direct compilation or import into a LaTeX editor.
+- `Group_33_Report.pdf`: 21-page report compiled from the supplied source.
+- `DSA5205_Project2_Group33_Overleaf.zip`: standalone project with `main.tex` at its root; select XeLaTeX in Overleaf or run `latexmk -xelatex main.tex` locally.
+- `DSA5205_Project2_Group33_Code.zip`: analysis implementation, frozen results, current manuscript, tests, dependencies, and reproduction instructions. No raw vendor price history or secrets.
 
-The manuscript is substantially rewritten around the economic finding, with numbered equations, an algorithm, booktabs tables, author-year citations, accounting proofs, and complete fit audits. No trading model was refitted or reselected for the paper rewrite. This custom conference-style layout does not assert a conference affiliation or acceptance.
+All original 31 supplied source files are unchanged and fingerprinted in `paper/source_manifest.json`. The report wrapper now compiles those assets without running the historical manuscript generator. The original strategy, selection, and test results are unchanged.
 
-At 5 bps single-side costs, Ridge has CAGR 6.54%, Sharpe 0.481, and maximum drawdown -22.20%; buy-and-hold has CAGR 11.18%, Sharpe 0.670, and drawdown -26.28%. No net outperformance is claimed.
-
-Before course submission, fill the group identity and true contribution statement, review the artifacts, and confirm the final presentation meets course rules. No Canvas submission has been performed.
+The original analysis commit remains `2e2e265ba9d007c94279225febaa15a054dff7cf`, as cited in the manuscript. The publication commit adds the final Group 33 sources. Earlier report and synthetic-walkthrough editions remain available in previous releases; this release does not assert a completed team video or Canvas submission.

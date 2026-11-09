@@ -1,32 +1,37 @@
-# LaTeX research report
+# Group 33 Overleaf report
 
-The main paper uses a custom two-column, Times-style conference layout with numbered equations, algorithms, booktabs tables, author-year citations, and vector figures. The detailed technical supplement is single-column. This is a course research report, not an assertion of acceptance at or affiliation with a conference.
+This directory contains the authors' supplied `DSA5205_Project2_Group33_Overleaf` sources. Its original 31 files are published unchanged, including metadata, bibliography, tables, figures, and line endings. `source_manifest.json` records their SHA-256 identities. This README and the manifest are publication support files.
 
-## Build
+The current document is **21 pages**, titled *Regularized Market Timing with Transaction Costs: Evidence from Daily SPY Returns*. The members and contribution statements are defined in `metadata.tex`.
 
-Install [Tectonic](https://tectonic-typesetting.github.io/) or a standard TeX installation with `latexmk`. On macOS, `brew install tectonic` is one option. Tectonic downloads required TeX resources on first use, so that compile needs network access.
+## Overleaf
 
-From the repository root, after installing the Python requirements:
+Download `DSA5205_Project2_Group33_Overleaf.zip` from the latest release, upload it as a new Overleaf project, choose `main.tex`, and select **XeLaTeX**. The ZIP has `main.tex` at its root. Tables and vector figures are included, so compiling the report does not download market data or require Python.
+
+## Local compilation
+
+From this directory:
+
+```bash
+latexmk -xelatex main.tex
+```
+
+Tectonic 0.17.0 is also verified:
+
+```bash
+tectonic --untrusted main.tex
+```
+
+These commands produce `main.pdf`. The repository wrapper, run from the repository root, verifies the source and frozen research-result identities before typesetting:
 
 ```bash
 python -m project2.report
 ```
 
-This regenerates `paper/generated/` from saved result tables, compiles `paper/main.tex`, checks for overflow and undefined references, enforces 15-25 pages, and writes `output/pdf/Group_X_Report.pdf`. It does not fit or select a trading model.
+It writes `output/pdf/Group_33_Report.pdf` and `output/report_build.json`. It does not regenerate manuscript assets, retrain models, change the supplied prose, or reselect a strategy. An intentionally edited manuscript can be compiled directly; to update its recorded source identities in the wrapper, use `python -m project2.report --refresh-source-manifest`. The research-input checks remain active.
 
-To compile already-generated sources directly:
+## Analysis versus manuscript versions
 
-```bash
-cd paper
-tectonic main.tex
-```
+The appendix pins commit `2e2e265ba9d007c94279225febaa15a054dff7cf` for the original analysis. That is distinct from the current publication commit and is retained intentionally. The manuscript's `generated/sources.json` matches the saved result files in this repository.
 
-The result is `paper/main.pdf`. A standard TeX installation can instead use `latexmk -pdf main.tex`.
-
-For a separate research workspace:
-
-```bash
-python -m project2.report --workspace runs/reproduction
-```
-
-The script copies the maintained TeX templates into that workspace and uses its saved results. Templates are in `sections/`, references in `references.bib`, and tables/numeric macros in `generated/*.tex`. Do not hand-edit generated numbers. Team information remains intentionally unfilled pending the user's details.
+`project2/paper_assets.py` belongs to the historical v1.1 manuscript and is not the source generator for this final Overleaf project. It is guarded against overwriting this directory. Earlier report editions remain accessible through previous Git tags and releases.

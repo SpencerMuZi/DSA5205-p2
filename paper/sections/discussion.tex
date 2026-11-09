@@ -1,19 +1,43 @@
 \section{Discussion and Limitations}
 \label{sec:discussion}
-The experiment separates three claims that can otherwise be conflated. First, a pipeline can preserve time order and reproduce a numerical result. Second, a model can generate a portfolio with lower realized risk. Third, a strategy can deliver superior net investment performance. The evidence supports the first claim and documents a sample-specific risk reduction. It does not support the third. Methodological correctness is necessary for an interpretable negative finding; it is not evidence that the model must contain a profitable signal.
+\subsection{What the experiment establishes}
+The main empirical result is a net performance shortfall relative to SPY buy-and-hold. Three measured components explain it. First, squared-error prediction is slightly worse than the historical-mean reference, and direction accuracy does not exceed the unconditional positive-return rate. Second, the strategy omits intervals with positive average equity returns, lowering gross growth. Third, 246 one-way trade units create a substantial fee burden. These components are consistent with the observed combination of lower volatility, lower CAGR, and lower net Sharpe.
 
-\paragraph{Selection and historical hindsight.}
-The four-candidate grid is intentionally small, yet selecting by validation Sharpe can still favor estimation noise. The strong validation performance does not transfer to the holdout. The study cannot uniquely attribute this decline to a regime change, selection optimism, or weak underlying predictability. Moreover, the design was implemented after the test years had occurred. Fingerprints enforce consistency of the implemented sequence, not independence from all prior familiarity with market history.
+The financial and statistical comparisons answer different questions. The negative $R^2_{\mathrm{OOS}}$ concerns squared error; the portfolio result concerns weighted returns and costs. Here both offer little support for the selected rule, but the connection is empirical rather than an identity. The strategy also selects an invested subset with a higher mean asset return than the excluded subset. That association is insufficient to offset foregone positive exposure and implementation costs. The joint evidence is more informative than either a hit rate or a drawdown ranking alone.
 
-\paragraph{Execution and financing.}
-Orders are assumed to fill at the next observed opening price, with fixed proportional costs. Auction participation constraints, depth, market impact, rejected orders, and partial fills are absent. Cash and the Sharpe reference rate are zero, and distributions are credited as ex-date receivables. These simplifying assumptions affect economic interpretation. The final comparison is internally consistent, but is not a deployment-ready simulation of a specific account.
+Ridge has a clear role within the workflow: it constrains coefficient magnitudes in a correlated-input regression. The rolling window and monthly schedule determine how much history informs each decision. Validation then chooses among four implementations of that estimator. This separation keeps the interpretation precise. The experiment evaluates a regularized trading procedure, not a theorem that shrinkage or more features must produce an investment advantage.
 
-\paragraph{Scope and statistical uncertainty.}
-One ETF and one four-year holdout cannot establish broad generality. The reported Sharpe ratios are point estimates, and no dependence-robust confidence intervals, formal superiority tests, or factor alpha estimates are supplied. In particular, the small gross Sharpe difference is not presented as significant. Calendar-year breakdowns and diagnostic plots are descriptive; examining them does not increase the number of independent holdout observations.
+\subsection{Limitations}
+\label{sec:limitations}
+The strategy was designed in November 2026 using already historical market data. The implemented configuration and selection were fixed before its initial download, but the study is not an externally preregistered prospective experiment. Selecting the largest validation Sharpe can favor noise even with four candidates. The fall from validation Sharpe 1.206 to test Sharpe 0.481 can reflect selection optimism, changing relationships, or sampling variation; the present design does not distinguish those explanations.
 
-\paragraph{Model limitations and future work.}
-The model is additive and linear, its feature set is narrow, and monthly refitting can lag rapid changes. Binary allocations ignore confidence and expected transaction costs. A no-trade region, smoother position map, or pre-specified investable risk-matched benchmark is a reasonable future question. Each would alter the research design and require a new evaluation protocol. None is chosen retrospectively here as an allegedly improved strategy.
+The final evaluation concerns one ETF and four years. Sharpe ratios and annual results are point estimates: no dependence-robust confidence intervals, formal superiority tests, or factor-alpha estimates are included. The gross Sharpe difference of approximately 0.007 is consequently treated as numerical similarity, not evidence of outperformance. Conditional-return and coefficient summaries are descriptive associations among correlated observations and inputs.
+
+Execution assumes the observed next opening price and a fixed proportional fee. Opening-auction depth, market impact, partial fills, and actual brokerage financing are not modeled. Cash earns zero, so the reported Sharpe is a zero-rate measure rather than realized excess performance over Treasury bills. Dividend receivables are credited and reinvested at the ex-date exit open instead of their payment date. The supported history has no splits. Vendor revisions can alter a later download, and exact numerical reproduction depends on the recorded input snapshot.
+
+The constant-exposure diagnostic uses the observed test-average allocation and ignores fractional rebalancing costs. It is an ex post attribution calculation, not an investable benchmark. A risk-matched strategy would require its own advance allocation rule and accounting. Likewise, no-trade regions, continuous weights, state interactions, other training windows, and additional assets are outside the evaluated strategy. These are changes to the research design rather than results of this study.
 
 \section{Conclusion}
 \label{sec:conclusion}
-A small Ridge model with explicit information timing, validation-only selection, and reproducible accounting does not outperform SPY buy-and-hold after the stated costs. Its \RidgeCAGR{} CAGR and \RidgeSharpe{} Sharpe fall below the benchmark's \BHCAGR{} and \BHSharpe{}. Lower drawdown accompanies lower equity exposure, while frequent switching turns approximate gross Sharpe parity into net underperformance. The study's useful output is a transparent empirical result and an inspectable explanation of the implementation gap. The accompanying supplement supplies the target derivation, accounting proofs, complete tables, fit audits, and exact reproduction commands.
+The selected Ridge rule converts five trailing price features into daily SPY or cash positions under explicit timing, training, and cost conventions. In 2022--2025 it earns \RidgeCAGR{} net CAGR and a \RidgeSharpe{} Sharpe ratio, below buy-and-hold's \BHCAGR{} and \BHSharpe{}. Its smaller full-period drawdown accompanies lower equity participation. Weak forecast performance, positive returns during excluded intervals, and frequent full-position switches jointly explain the economic result. The project demonstrates the complete path from a plausible signal specification to a validated, reproducible trading evaluation, while preserving the finding that this implementation does not improve net performance.
+
+\section{Reproducibility and Contributions}
+\label{sec:repro}
+The research implementation, configuration, and published result files are available in the accompanying repository \citep{implementation}. Training and accounting are implemented in \code{project2/core.py}; data checks in \code{project2/data.py}; validation and final evaluation in \code{project2/pipeline.py}. The saved CSV and JSON outputs produce the report's tables and figures. Appendix~\ref{app:reproduction} provides platform-specific environment activation, platform-independent analysis commands, package versions, and the artifact map.
+
+The recorded clean-environment rerun used the same input snapshot in a fresh working directory and reproduced the validation grid, test forecasts, fit audits, and headline metrics byte for byte. Eleven integrity checks cover label maturity, future-data perturbations, scaling, execution and distribution alignment, costs, data validity, and drawdown. Full fit records and individual test cases remain in the code package; the report retains representative records and the complete performance comparisons.
+
+\subsection*{Author contributions}
+\noindent\begin{tabularx}{\textwidth}{@{}p{.27\textwidth}X@{}}
+\toprule
+Member & Contribution \\
+\midrule
+\MemberOneName & \MemberOneContribution \\
+\MemberTwoName & \MemberTwoContribution \\
+\MemberThreeName & \MemberThreeContribution \\
+\MemberFourName & \MemberFourContribution \\
+\bottomrule
+\end{tabularx}
+
+\subsection*{AI assistance}
+GPT-6.1 Sol (OpenAI) was used for code review and debugging, and for report organization and language editing. The authors verified the reported results and take responsibility for the analysis and submitted work.
