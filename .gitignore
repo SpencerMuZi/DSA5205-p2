@@ -8,9 +8,7 @@ data/raw/*
 data/processed/
 tmp/
 runs/
-output/video/*.mp4
-output/video/*.aiff
-output/video/*.wav
+output/video/
 output/package/
 paper/*.pdf
 paper/*.aux

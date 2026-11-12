@@ -2,16 +2,16 @@
 
 **Regularized Market Timing with Transaction Costs: Evidence from Daily SPY Returns**
 
-Members: **Li Chongkai, Zhang Leyao, Zhang Yikai, Ye Tiantian**. The current report includes the team information and contribution statements supplied in the authors' latest Overleaf project.
+Members: **Li Chongkai, Zhang Leyao, Zhang Yikai, Ye Tiantian**. The report lists each member's contributions.
 
-## Current report and source package
+## Submission materials
 
 - [Group 33 report — 21 pages](output/pdf/Group_33_Report.pdf).
 - [Authoritative Overleaf sources](paper/main.tex), [team metadata](paper/metadata.tex), and [build instructions](paper/README.md).
 - [Download the PDF, Overleaf ZIP, and code ZIP](https://github.com/SpencerMuZi/DSA5205-p2/releases/latest).
 - [Compilation record](output/report_build.json) and [source-file identities](paper/source_manifest.json).
 
-The original 31 files from `DSA5205_Project2_Group33_Overleaf` are published unchanged under `paper/`. The supplied prose, title, member order, contributions, and AI-assistance statement are preserved. Tables and vector figures are self-contained. Previous 18-page and 21-page prototype editions remain in the release history; the current report is named **Group_33_Report.pdf**.
+The report sources in `paper/` include the tables and vector figures. The final team presentation was submitted separately through Canvas.
 
 For Overleaf, upload `DSA5205_Project2_Group33_Overleaf.zip`, select `main.tex`, and choose **XeLaTeX**. No Python environment or market-data download is needed to compile that archive.
 
@@ -52,7 +52,7 @@ The Python wrapper verifies the published source and research-result fingerprint
 python -m project2.report
 ```
 
-Expected output: `output/pdf/Group_33_Report.pdf` and `output/report_build.json`. The wrapper compiles the supplied manuscript as-is; it does not regenerate its assets or refit the strategy. After intentional manuscript edits, `python -m project2.report --refresh-source-manifest` refreshes source identities while leaving research-input checks active. Team details are maintained in `paper/metadata.tex`.
+Expected output: `output/pdf/Group_33_Report.pdf` and `output/report_build.json`. The wrapper compiles the included manuscript and verifies its inputs.
 
 ## Reproduce the analysis
 
@@ -70,9 +70,9 @@ On Windows PowerShell, activate with `.venv\Scripts\Activate.ps1`. `requirements
 
 The analysis command creates a separate workspace, downloads historical Yahoo data if no cache exists, audits exchange sessions and corporate actions, validates four penalties, locks selection, and evaluates only the selected holdout model. Results go to `runs/reproduction/output/`. Expected output includes **4,024 sessions, 64 dividend events, 0 splits, alpha=1**, and the metrics above, conditional on matching the vendor snapshot.
 
-The manuscript appendix pins original analysis commit `2e2e265ba9d007c94279225febaa15a054dff7cf`. That identifies the research implementation; the current publication commit additionally contains the finalized Group 33 manuscript. The frozen research outputs and selection remain unchanged.
+The manuscript appendix cites analysis commit `2e2e265ba9d007c94279225febaa15a054dff7cf`. The saved results and validation selection are included in this repository.
 
-Report compilation and analysis reproduction are separate operations. A fresh vendor download may differ after historical revisions. The supplied report represents its recorded snapshot, and the report wrapper refuses to present changed research outputs as that same frozen manuscript. Update and disclose a manuscript's tables deliberately if its underlying experiment changes.
+The report uses the recorded data snapshot. A fresh vendor download may differ after historical revisions, so run the analysis in a separate workspace as shown above.
 
 Raw prices are excluded from Git and the code ZIP. Provenance is in [data/provenance.json](data/provenance.json). Identical-input reproduction is documented in [output/reproducibility_check.json](output/reproducibility_check.json).
 
@@ -126,6 +126,4 @@ Eleven tests cover execution/label timing, dividend entitlement, future-data per
 | `output/tables/` | Validation, forecasts, fit audits, returns, and costs |
 | `output/report_build.json` | Current report compilation record |
 
-`project2/paper_assets.py` is the legacy v1.1 asset generator and is guarded against overwriting the final supplied manuscript. Original research-stage logs and the earlier synthetic walkthrough under `output/video/` are historical materials; they are not a completed Group 33 presentation. Historical MP4 assets remain in [release v1.1.0](https://github.com/SpencerMuZi/DSA5205-p2/releases/tag/v1.1.0).
-
-The original course handout and raw vendor prices are not redistributed. No secrets or live-trading functionality are included. The authors' AI-assistance and contribution statements are retained in the report.
+This repository contains a historical backtest. Data provenance and the research assumptions are documented above and in the report.

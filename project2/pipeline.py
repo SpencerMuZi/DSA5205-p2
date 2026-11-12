@@ -18,7 +18,7 @@ from .data import audit, fetch, load
 
 
 def setup():
-    for folder in ["output/tables", "output/figures", "output/pdf", "output/video", "data/raw"]:
+    for folder in ["output/tables", "output/figures", "output/pdf", "data/raw"]:
         Path(folder).mkdir(parents=True, exist_ok=True)
 
 
